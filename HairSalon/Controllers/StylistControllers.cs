@@ -5,7 +5,7 @@ using HairSalon.Models;
 
 namespace HairSalon.Controllers
 {
-    public class HairSalonController : Controller
+    public class StylistController : Controller
     {
         [HttpGet("/stylists")]
         public ActionResult Index()
@@ -25,6 +25,12 @@ namespace HairSalon.Controllers
           Stylist createdStylist = new Stylist(stylelistname, phoneNum);
           createdStylist.Save();
           return RedirectToAction("Index");
+        }
+        [HttpGet("/stylists/{id}")]
+        public ActionResult Show(int id)
+        {
+          Stylist foundStylist = Stylist.Find(id);
+          return View(foundStylist);
         }
     }
 }

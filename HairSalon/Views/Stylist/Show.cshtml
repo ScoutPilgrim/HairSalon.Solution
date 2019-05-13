@@ -1,0 +1,23 @@
+@{
+  Layout = "_Layout";
+}
+@using HairSalon.Models;
+<h1>@Model.GetName()</h1>
+<h3>Phone Number: @Model.GetPhone()</h3>
+
+ @{
+   var clientList = @Model.GetAllClients();
+ }
+@if(clientList.Count == 0)
+{
+  <h5>@Model.GetName() has no clients!</h5>
+}
+@if(clientList.Count != 0)
+{
+  foreach(Client client in clientList)
+  {
+    <li> Name: @client.GetName() , Phone: @client.GetPhone() </li>
+  }
+}
+<a href="/stylists">Back</a>
+<a href="/stylist/@Model.GetId()/clients/new">
