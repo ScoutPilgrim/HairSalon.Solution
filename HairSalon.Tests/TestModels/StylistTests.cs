@@ -15,13 +15,47 @@ namespace HairSalon.TestTools
     }
     public StylistTests()
     {
-      DB.configuration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=ian_christner_test;";
+      DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=ian_christner_test;";
     }
 
     [TestMethod]
     public void Equals_FunctionTest_True()
     {
-      Stylist test_1 = new Stylist();
+      Stylist test_1 = new Stylist(1, "test", 123456789);
+      Stylist test_2 = new Stylist(1, "test", 123456789);
+
+      Assert.AreEqual(test_1, test_2);
+    }
+    [TestMethod]
+    public void Equals_FunctionTest_False()
+    {
+      Stylist test_1 = new Stylist(1, "test", 123456789);
+      Stylist test_2 = new Stylist(2, "this", 987654321);
+
+      Assert.AreNotEqual(test_1, test_2);
+    }
+    [TestMethod]
+    public void Save_GetAll_Test_One()
+    {
+      Stylist test_1 = new Stylist(1, "test", 123456789);
+      test_1.Save();
+
+      List<Stylist> getAllTest = Stylist.GetAll();
+      Stylist test_2 = getAllTest[0];
+      Assert.AreEqual(test_1, test_2);
+    }
+    [TestMethod]
+    public void Save_GetAll_Test_Multiple()
+    {
+      List<Stylist> testList = new List<Stylist>();
+      Stylist test_1 = new Stylist(1, "test", 123456789);
+      Stylist test_2 = new Stylist(2, "this", 987654321);
+      test_1.Save();
+      test_2.Save();
+      testList.Add(test_1);
+      testList.Add(test_2);
+      List<Stylist> getAllTest = Stylist.GetAll();
+      CollectionAssert.AreEqual(testList, getAllTest);
     }
   }
 }

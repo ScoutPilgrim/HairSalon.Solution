@@ -30,9 +30,25 @@ namespace HairSalon.Models
     {
       return _phone;
     }
-    public GetStylist()
+    public int GetStylist()
     {
       return _stylistId;
+    }
+    public override bool Equals(System.Object otherClient)
+    {
+      if (!(otherClient is Client))
+      {
+        return false;
+      }
+      else
+      {
+         Client newItem = (Client) otherClient;
+         bool idEquality = this.GetId() == newItem.GetId();
+         bool nameEquality = this.GetName() == newItem.GetName();
+         bool phoneEquality = this.GetPhone() == newItem.GetPhone();
+         bool clientIdEquality = this.GetStylist() == newItem.GetStylist();
+         return (idEquality && nameEquality && phoneEquality && clientIdEquality);
+       }
     }
   }
 }
