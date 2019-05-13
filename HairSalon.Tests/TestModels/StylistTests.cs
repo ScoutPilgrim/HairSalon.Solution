@@ -57,5 +57,16 @@ namespace HairSalon.TestTools
       List<Stylist> getAllTest = Stylist.GetAll();
       CollectionAssert.AreEqual(testList, getAllTest);
     }
+    [TestMethod]
+    public void GetAllClients_Test_One()
+    {
+      Client testClient_1 = new Client(1, "test", 123456789, 1);
+      testClient_1.Save();
+      Stylist testStylist_1 = new Stylist(1, "test", 123456789);
+      testStylist_1.Save();
+      List<Client> testList = new List<Client>{testClient_1};
+      List<Client> getAllList = testStylist_1.GetAllClients();
+      CollectionAssert.AreEqual(testList, getAllList);
+    }
   }
 }

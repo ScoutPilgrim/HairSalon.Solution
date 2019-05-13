@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HairSalon.Models
 {
@@ -103,6 +104,31 @@ namespace HairSalon.Models
         conn.Dispose();
       }
       return allStylists;
+    }
+    public List<Client> GetAllClients()
+    {
+      List<Client> foundClients = new List<Client>();
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM clients WHERE stylist_id = @stylist_id;";
+      MySqlParameter stylist_id = new MySqlParameter("@stylist_id", this._id);
+      cmd.Parameters.Add(stylist_id);
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        int readClientId = rdr.GetInt32(0);
+        string readClientName = rdr.GetString(1);
+        int readClientPhone = rdr.GetInt32(2);
+        Client readClient = new Client(readClientId, readClientName, readClientPhone, this._id);
+        foundClients.Add(readClient);
+      }
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+      return foundClients;
     }
   }
 }
