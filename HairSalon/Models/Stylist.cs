@@ -10,7 +10,7 @@ namespace HairSalon.Models
     private string _name;
     private int _phone;
 
-    public Stylist(int id, string name, int phone)
+    public Stylist(string name, int phone, int id = 0)
     {
       _id = id;
       _name = name;
@@ -95,7 +95,7 @@ namespace HairSalon.Models
         int readId = rdr.GetInt32(0);
         string readName = rdr.GetString(1);
         int readPhone = rdr.GetInt32(2);
-        Stylist readStylist = new Stylist(readId, readName, readPhone);
+        Stylist readStylist = new Stylist(readName, readPhone, readId);
         allStylists.Add(readStylist);
       }
       conn.Close();
@@ -120,7 +120,7 @@ namespace HairSalon.Models
         int readClientId = rdr.GetInt32(0);
         string readClientName = rdr.GetString(1);
         int readClientPhone = rdr.GetInt32(2);
-        Client readClient = new Client(readClientId, readClientName, readClientPhone, this._id);
+        Client readClient = new Client(readClientName, readClientPhone, this._id, readClientId);
         foundClients.Add(readClient);
       }
       conn.Close();

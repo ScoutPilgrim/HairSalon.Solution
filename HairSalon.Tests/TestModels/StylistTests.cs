@@ -21,23 +21,23 @@ namespace HairSalon.TestTools
     [TestMethod]
     public void Equals_FunctionTest_True()
     {
-      Stylist test_1 = new Stylist(1, "test", 123456789);
-      Stylist test_2 = new Stylist(1, "test", 123456789);
+      Stylist test_1 = new Stylist("test", 123456789, 1);
+      Stylist test_2 = new Stylist("test", 123456789, 1);
 
       Assert.AreEqual(test_1, test_2);
     }
     [TestMethod]
     public void Equals_FunctionTest_False()
     {
-      Stylist test_1 = new Stylist(1, "test", 123456789);
-      Stylist test_2 = new Stylist(2, "this", 987654321);
+      Stylist test_1 = new Stylist("test", 123456789, 1);
+      Stylist test_2 = new Stylist("this", 987654321, 2);
 
       Assert.AreNotEqual(test_1, test_2);
     }
     [TestMethod]
     public void Save_GetAll_Test_One()
     {
-      Stylist test_1 = new Stylist(1, "test", 123456789);
+      Stylist test_1 = new Stylist("test", 123456789, 1);
       test_1.Save();
 
       List<Stylist> getAllTest = Stylist.GetAll();
@@ -48,8 +48,8 @@ namespace HairSalon.TestTools
     public void Save_GetAll_Test_Multiple()
     {
       List<Stylist> testList = new List<Stylist>();
-      Stylist test_1 = new Stylist(1, "test", 123456789);
-      Stylist test_2 = new Stylist(2, "this", 987654321);
+      Stylist test_1 = new Stylist("test", 123456789, 1);
+      Stylist test_2 = new Stylist("this", 987654321, 2);
       test_1.Save();
       test_2.Save();
       testList.Add(test_1);
@@ -60,9 +60,9 @@ namespace HairSalon.TestTools
     [TestMethod]
     public void GetAllClients_Test_One()
     {
-      Client testClient_1 = new Client(1, "test", 123456789, 1);
+      Client testClient_1 = new Client("test", 123456789, 1, 1);
       testClient_1.Save();
-      Stylist testStylist_1 = new Stylist(1, "test", 123456789);
+      Stylist testStylist_1 = new Stylist("test", 123456789, 1);
       testStylist_1.Save();
       List<Client> testList = new List<Client>{testClient_1};
       List<Client> getAllList = testStylist_1.GetAllClients();
@@ -72,11 +72,11 @@ namespace HairSalon.TestTools
     public void GetAllClients_Test_Multiple()
     {
       Client.ClearAll();
-      Client testClient_1 = new Client(1, "test", 123456789, 1);
-      Client testClient_2 = new Client(2, "test", 123456789, 1);
+      Client testClient_1 = new Client("test", 123456789, 1, 1);
+      Client testClient_2 = new Client("test", 123456789, 1, 2);
       testClient_1.Save();
       testClient_2.Save();
-      Stylist testStylist_1 = new Stylist(1, "test", 123456789);
+      Stylist testStylist_1 = new Stylist("test", 123456789, 1);
       testStylist_1.Save();
       List<Client> testList = new List<Client>{testClient_1, testClient_2};
       List<Client> getAllList = testStylist_1.GetAllClients();

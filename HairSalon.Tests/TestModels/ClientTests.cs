@@ -21,23 +21,23 @@ namespace HairSalon.TestTools
     [TestMethod]
     public void Equals_FunctionTest_True()
     {
-      Client test_1 = new Client(1, "test", 123456789, 1);
-      Client test_2 = new Client(1, "test", 123456789, 1);
+      Client test_1 = new Client("test", 123456789, 1, 1);
+      Client test_2 = new Client("test", 123456789, 1, 1);
 
       Assert.AreEqual(test_1, test_2);
     }
     [TestMethod]
     public void Equals_FunctionTest_False()
     {
-      Client test_1 = new Client(1, "test", 123456789, 1);
-      Client test_2 = new Client(2, "this", 987654321, 2);
+      Client test_1 = new Client("test", 123456789, 1, 1);
+      Client test_2 = new Client("this", 987654321, 2, 2);
 
       Assert.AreNotEqual(test_1, test_2);
     }
     [TestMethod]
     public void Save_GetAll_Test_One()
     {
-      Client test_1 = new Client(1, "test", 123456789, 2);
+      Client test_1 = new Client("test", 123456789, 2, 1);
       test_1.Save();
 
       List<Client> getAllTest = Client.GetAll();
@@ -48,8 +48,8 @@ namespace HairSalon.TestTools
     public void Save_GetAll_Test_Multiple()
     {
       List<Client> testList = new List<Client>();
-      Client test_1 = new Client(1, "test", 123456789, 1);
-      Client test_2 = new Client(2, "this", 987654321, 2);
+      Client test_1 = new Client("test", 123456789, 1, 1);
+      Client test_2 = new Client("this", 987654321, 2, 2);
       test_1.Save();
       test_2.Save();
       testList.Add(test_1);

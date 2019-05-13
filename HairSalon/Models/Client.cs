@@ -11,7 +11,7 @@ namespace HairSalon.Models
     private int _phone;
     private int _stylistId;
 
-    public Client(int id, string name, int phone, int stylistId)
+    public Client(string name, int phone, int stylistId, int id = 0)
     {
       _id = id;
       _name = name;
@@ -104,7 +104,7 @@ namespace HairSalon.Models
         string readName = rdr.GetString(1);
         int readPhone = rdr.GetInt32(2);
         int readStylistId = rdr.GetInt32(3);
-        Client readClient = new Client(readId, readName, readPhone, readStylistId);
+        Client readClient = new Client(readName, readPhone, readStylistId, readId);
         allClients.Add(readClient);
       }
       conn.Close();
