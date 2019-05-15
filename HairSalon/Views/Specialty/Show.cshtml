@@ -1,0 +1,36 @@
+@{
+  Layout = "_Layout";
+}
+@using HairSalon.Models;
+<h1>@Model.GetSpec()</h1>
+
+ @{
+   var stylistList = @Model.GetAllStylists();
+   var allStylists = Stylist.GetAll();
+ }
+@if(stylistList.Count == 0)
+{
+  <h5>@Model.GetSpec() has no stylists!</h5>
+}
+@if(stylistList.Count != 0)
+{
+  foreach(Stylist stylist in stylistList)
+  {
+    <li><a href="/stylists/@stylist.GetId()"> Name: @stylist.GetName() , Phone: @stylist.GetPhone() </a></li>
+  }
+}
+<a href="/specialties">Back</a>
+<a href="/specialties/@Model.GetId()/edit">Edit This Specialty</a>
+<form action="/specialties/destroy/@Model.GetId()" method="post">
+  <button type="submit" class="btn btn-danger">Delete Specialty</button>
+</form>
+<form action='/specialties/@Model.GetId()/stylists/new' method='post'>
+  <label for='stylistId'>Select a stylist</label>
+  <select id='stylistId' name='stylistId' type='text'>
+    @foreach (var stylist in allStylists)
+    {
+      <option value='@stylist.GetId()'>@stylist.GetName()</option>
+    }
+  </select>
+  <button type='submit'>Add</button>
+</form>

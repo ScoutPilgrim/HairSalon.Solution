@@ -130,6 +130,29 @@ namespace HairSalon.Models
       }
       return foundClients;
     }
+    public List<Specialty> GetAllSpecialties()
+    {
+      List<Specialty> foundSpecialties = new List<Specialty>();
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM stylists_specialties WHERE stylist_id = @stylist_id;";
+      MySqlParameter stylist_id = new MySqlParameter("@stylist_id", this._id);
+      cmd.Parameters.Add(stylist_id);
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      while(rdr.Read())
+      {
+        int readSpecialtyId = rdr.GetInt32(2);
+        Specialty readSpecialty = Specialty.Find(readSpecialtyId);
+        foundSpecialties.Add(readSpecialty);
+      }
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+      return foundSpecialties;
+    }
     public static Stylist Find(int myId)
     {
       MySqlConnection conn = DB.Connection();
@@ -175,7 +198,7 @@ namespace HairSalon.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM stylists WHERE id = @id; DELETE FROM clients WHERE stylist_id = @id;";
+      cmd.CommandText = @"DELETE FROM stylists WHERE id = @id; DELETE FROM clients WHERE stylist_id = @id; DELETE FROM stylists_specialties WHERE stylist_id = @id";
       MySqlParameter myId = new MySqlParameter("@id", this.GetId());
       cmd.Parameters.Add(myId);
       cmd.ExecuteNonQuery();
