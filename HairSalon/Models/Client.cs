@@ -114,5 +114,62 @@ namespace HairSalon.Models
       }
       return allClients;
     }
+    public static Client Find(int myId)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"SELECT * FROM clients WHERE id = @id;";
+      MySqlParameter id = new MySqlParameter("@id", myId);
+      cmd.Parameters.Add(id);
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int readClientId = 0;
+      string readClientName = "";
+      int readClientPhone = 0;
+      int readClientStylistId = 0;
+      while(rdr.Read())
+      {
+        readClientId = rdr.GetInt32(0);
+        readClientName = rdr.GetString(1);
+        readClientPhone = rdr.GetInt32(2);
+        readClientStylistId = rdr.GetInt32(3);
+      }
+      Client readClient = new Client(readClientName, readClientPhone, readClientStylistId, readClientId);
+      return readClient;
+    }
+    public void Edit(string newName, int newPhone)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"UPDATE clients SET name = @name WHERE id = @id; UPDATE clients SET phone = @phone WHERE id = @id";
+      MySqlParameter myName = new MySqlParameter("@name", newName);
+      MySqlParameter myPhone = new MySqlParameter("@phone", newPhone);
+      MySqlParameter myId = new MySqlParameter("@id", this.GetId());
+      cmd.Parameters.Add(myName);
+      cmd.Parameters.Add(myPhone);
+      cmd.Parameters.Add(myId);
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+    }
+    public void Delete()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE FROM clients WHERE id = @id;";
+      MySqlParameter myId = new MySqlParameter("@id", this.GetId());
+      cmd.Parameters.Add(myId);
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Close();
+      }
+    }
   }
 }

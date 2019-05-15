@@ -16,7 +16,7 @@
 {
   foreach(Client client in clientList)
   {
-    <li> Name: @client.GetName() , Phone: @client.GetPhone() </li>
+    <li><a href="/stylists/@Model.GetId()/clients/@client.GetId()"> Name: @client.GetName() , Phone: @client.GetPhone() </a></li>
   }
 }
 <a href="/stylists">Back</a>

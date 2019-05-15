@@ -1,0 +1,13 @@
+@{
+  Layout = "_Layout";
+}
+@using HairSalon.Models;
+<h1>@Model["client"].GetName()</h1>
+<h3>Phone Number: @Model["client"].GetPhone()</h3>
+
+<h3>My Stylist is: @Model["stylist"].GetName()</h3>
+<a href="/stylists/@Model["stylist"].GetId()">Back</a>
+<a href="/stylists/@Model["stylist"].GetId()/clients/@Model["client"].GetId()/edit">Edit This Client</a>
+<form action="/stylists/@Model["stylist"].GetId()/clients/destroy/@Model["client"].GetId()" method="post">
+  <button type="submit" class="btn btn-danger">Delete Client</button>
+</form>
