@@ -20,4 +20,8 @@
   }
 }
 <a href="/stylists">Back</a>
+<a href="/stylists/@Model.GetId()/edit">Edit This Stylist</a>
 <a href="/stylists/@Model.GetId()/clients/new">New Client</a>
+<form action="/stylists/destroy/@Model.GetId()" method="post">
+  <button type="submit" class="btn btn-danger">Delete Stylist</button>
+</form>

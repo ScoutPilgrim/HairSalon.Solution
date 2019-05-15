@@ -50,7 +50,7 @@ namespace HairSalon.Models
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE FROM stylists;";
+      cmd.CommandText = @"DELETE FROM stylists; @DELETE FROM clients";
       cmd.ExecuteNonQuery();
       conn.Close();
       if(conn != null)
@@ -151,12 +151,31 @@ namespace HairSalon.Models
       Stylist readStylist = new Stylist(readStylistName, readStylistPhone, readStylistId);
       return readStylist;
     }
+    public void Edit(string newName, int newPhone)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"UPDATE stylists SET name = @name WHERE id = @id; UPDATE stylists SET phone = @phone WHERE id = @id";
+      MySqlParameter myName = new MySqlParameter("@name", newName);
+      MySqlParameter myPhone = new MySqlParameter("@phone", newPhone);
+      MySqlParameter myId = new MySqlParameter("@id", this.GetId());
+      cmd.Parameters.Add(myName);
+      cmd.Parameters.Add(myPhone);
+      cmd.Parameters.Add(myId);
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Dispose();
+      }
+    }
     public void Delete()
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"DELETE * FROM stylists WHERE id = @id; DELETE FROM clients WHERE stylist_id = @id;";
+      cmd.CommandText = @"DELETE FROM stylists WHERE id = @id; DELETE FROM clients WHERE stylist_id = @id;";
       MySqlParameter myId = new MySqlParameter("@id", this.GetId());
       cmd.Parameters.Add(myId);
       cmd.ExecuteNonQuery();
@@ -166,6 +185,6 @@ namespace HairSalon.Models
         conn.Close();
       }
     }
-    
+
   }
 }

@@ -28,7 +28,8 @@ namespace HairSalon.Controllers
           int phoneNum = Int32.Parse(phonenum);
           Client createdClient = new Client(clientname, phoneNum, id);
           createdClient.Save();
-          return RedirectToAction("Index");
+          string redStr = "/stylists/" + id.ToString();
+          return Redirect(redStr);
         }
     }
 }
