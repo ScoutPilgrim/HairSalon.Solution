@@ -71,6 +71,13 @@ namespace HairSalon.Controllers
           string redStr = "/stylists/" + stylistId.ToString();
           return Redirect(redStr);
         }
+        [HttpPost("/stylists/{stylistId}/clients/destroy")]
+        public ActionResult DestroyAll(int stylistId)
+        {
+          Client.ClearAllAtStylist(stylistId);
+          string redStr = "/stylists/" + stylistId.ToString();
+          return Redirect(redStr);
+        }
     }
 
 }

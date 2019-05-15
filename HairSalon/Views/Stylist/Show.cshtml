@@ -25,3 +25,6 @@
 <form action="/stylists/destroy/@Model.GetId()" method="post">
   <button type="submit" class="btn btn-danger">Delete Stylist</button>
 </form>
+<form action="/stylists/@Model.GetId()/clients/destroy" method="post">
+  <button type="submit" class="btn btn-danger">Delete All of this Stylists Clients</button>
+</form>
