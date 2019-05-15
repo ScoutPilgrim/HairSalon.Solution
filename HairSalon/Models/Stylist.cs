@@ -151,5 +151,21 @@ namespace HairSalon.Models
       Stylist readStylist = new Stylist(readStylistName, readStylistPhone, readStylistId);
       return readStylist;
     }
+    public void Delete()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"DELETE * FROM stylists WHERE id = @id; DELETE FROM clients WHERE stylist_id = @id;";
+      MySqlParameter myId = new MySqlParameter("@id", this.GetId());
+      cmd.Parameters.Add(myId);
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if(conn != null)
+      {
+        conn.Close();
+      }
+    }
+    
   }
 }
